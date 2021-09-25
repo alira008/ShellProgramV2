@@ -6,10 +6,11 @@
 
 #include "./vector_parser.hpp"
 
-class ConnectorParser {
+class ConnectorParser : private VectorParser {
  private:
   std::vector<std::string> unparsed_tokens;
   std::vector<char> delimiters = {' ', '|', '&', ';'};
+  bool is_char_delimiter(char character);
 
  public:
   ConnectorParser(){};
@@ -18,6 +19,7 @@ class ConnectorParser {
   ~ConnectorParser(){};
   std::vector<std::string> parse();
   void print_unparsed();
+  void print_parsed();
 };
 
 #endif
