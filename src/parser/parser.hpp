@@ -10,6 +10,7 @@ class Parser {
   Parser(){};
   ~Parser(){};
   virtual void print_unparsed() = 0;
+  virtual void print_parsed() = 0;
 };
 
 #endif
