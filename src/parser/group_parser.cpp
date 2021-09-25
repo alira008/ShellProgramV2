@@ -25,32 +25,38 @@ void GroupParser::countDelims(char character, int (&paren_cnt)[2],
 }
 
 std::vector<std::string> GroupParser::parse() {
-  std::string cur_str = "";
+  std::string curr_str = "";
   int paren_cnt[2] = {0}, bracket_cnt[2] = {0};
 
-  for (auto character : this->unparsed_line) {
-    //   Check if character is one of delimiters
+  for (int i = 0; i < this->unparsed_line.length(); ++i) {
+    //  Check if character is one of delimiters
     //  If character is a delim, we push current string and delim into token
     //  list
-    if (is_char_delim(character)) {
-      if (!cur_str.empty()) this->tokens.push_back(cur_str);
-      cur_str = character;
-      this->tokens.push_back(cur_str);
-      cur_str.clear();
+
+    if (this->is_char_delim(this->unparsed_line[i])) {
+      if (!curr_str.empty()) this->tokens.push_back(curr_str);
+      curr_str = this->unparsed_line[i];
+      this->tokens.push_back(curr_str);
+      curr_str.clear();
+    } else if (this->unparsed_line[i] == '\"') {
+      //  Our substring that includes only the string literal
+      std::string string_literal =
+          this->add_string_literal(this->unparsed_line, i);
+
+      //  add our string literal to our current string
+      if (string_literal.length() != 0) curr_str += string_literal;
     } else {
-      cur_str += character;
+      curr_str += this->unparsed_line[i];
     }
 
-    //  Incremenet amount of delimiters
-    this->countDelims(character, paren_cnt, bracket_cnt);
+    //  Increment amount of delimiters
+    this->countDelims(this->unparsed_line[i], paren_cnt, bracket_cnt);
   }
+
+  if (!curr_str.empty()) this->tokens.push_back(curr_str);
 
   if (paren_cnt[0] != paren_cnt[1] || bracket_cnt[0] != bracket_cnt[1]) {
     std::cout << "Error: unmatching brackets/parentheses" << std::endl;
-  }
-
-  for (auto token : this->tokens) {
-    std::cout << token << std::endl;
   }
 
   return this->tokens;
@@ -58,4 +64,12 @@ std::vector<std::string> GroupParser::parse() {
 
 void GroupParser::print_unparsed() {
   std::cout << this->unparsed_line << std::endl;
+}
+
+void GroupParser::print_parsed() {
+  std::cout << "From Group Parser - Parsed line: " << std::endl;
+  for (auto token : this->tokens) {
+    std::cout << "\t" << token << std::endl;
+  }
+  std::cout << "End of Group Parser" << std::endl;
 }

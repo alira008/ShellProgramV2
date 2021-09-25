@@ -16,10 +16,11 @@ class GroupParser : private VectorParser {
  public:
   GroupParser(){};
   GroupParser(std::string line_with_no_comments)
-      : unparsed_line(line_with_no_comments){};
+      : VectorParser{}, unparsed_line(line_with_no_comments){};
   ~GroupParser(){};
   std::vector<std::string> parse();
   void print_unparsed();
+  void print_parsed();
 };
 
 #endif
