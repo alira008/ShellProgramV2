@@ -15,15 +15,23 @@ std::string CommentParser::parse() {
   std::string line_without_comments = this->unparsed_line;
 
   while (i < line_size && !commentFound) {
-    const char c = this->unparsed_line[i];
+    // Here we set save the character we are looking at into a const char
+    // variable
+    const char character = this->unparsed_line[i];
 
-    if (c == '\"') {
+    if (character == '\"') {
       //  Starting from the position after this starting quote, we check the
       //  location of the end quote
-      size_t end_quote_loc = this->unparsed_line.find(c, i + 1);
+      size_t end_quote_loc = this->unparsed_line.find(character, i + 1);
+
+      //  We only set current i to the location of the end quote if it exists
+      //  and we found it in the line above
       if (end_quote_loc != std::string::npos) i = end_quote_loc;
-    } else if (c == '#') {
+    } else if (character == '#') {
+      //  Here we get the substring that has everything before the '#'
       line_without_comments = this->unparsed_line.substr(0, i);
+
+      //  We set commentFound to true so that we can exit the while loop
       commentFound = true;
     }
 
