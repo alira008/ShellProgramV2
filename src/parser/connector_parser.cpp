@@ -25,7 +25,7 @@ std::vector<std::string> ConnectorParser::parse() {
     for (int i = 0; i < unparsed_token.length(); ++i) {
       // check if our character is a delimiter
       if (this->is_char_delimiter(unparsed_token[i])) {
-        if (!curr_str.empty()) this->tokens.push_back(curr_str);
+        if (!curr_str.empty()) this->parsed_tokens.push_back(curr_str);
 
         // if we find a space, we remove it
         if (unparsed_token[i] != ' ') {
@@ -45,31 +45,36 @@ std::vector<std::string> ConnectorParser::parse() {
 
         // if it's not a delimiter
       } else {
-        if (!curr_connector.empty()) this->tokens.push_back(curr_connector);
+        if (!curr_connector.empty())
+          this->parsed_tokens.push_back(curr_connector);
 
         curr_connector.clear();
         curr_str += unparsed_token[i];
       }
     }
+    if (!curr_str.empty()) {
+      parsed_tokens.push_back(curr_str);
+      curr_str.clear();
+    }
+    if (!curr_connector.empty()) {
+      parsed_tokens.push_back(curr_connector);
+      curr_connector.clear();
+    }
   }
-  if (!curr_str.empty()) tokens.push_back(curr_str);
-  if (!curr_connector.empty()) tokens.push_back(curr_connector);
+  if (!curr_str.empty()) this->parsed_tokens.push_back(curr_str);
+  if (!curr_connector.empty()) this->parsed_tokens.push_back(curr_connector);
 
-  return this->tokens;
+  return this->parsed_tokens;
 }
 
 void ConnectorParser::print_unparsed() {
   std::cout << "From Connector Parser - Unparsed line: " << std::endl;
-  for (auto token : this->unparsed_tokens) {
-    std::cout << token << std::endl;
-  }
+  Parser::print_unparsed();
   std::cout << "End of Connector Parser" << std::endl;
 }
 
 void ConnectorParser::print_parsed() {
   std::cout << "From Connector Parser - Parsed line: " << std::endl;
-  for (auto token : this->tokens) {
-    std::cout << "\t" << token << std::endl;
-  }
+  Parser::print_parsed();
   std::cout << "End of Connector Parser" << std::endl;
 }

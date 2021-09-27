@@ -4,18 +4,17 @@
 #include <string>
 #include <vector>
 
-#include "./vector_parser.hpp"
+#include "./parser.hpp"
 
-class ConnectorParser : private VectorParser {
+class ConnectorParser : public Parser {
  private:
-  std::vector<std::string> unparsed_tokens;
   std::vector<char> delimiters = {' ', '|', '&', ';'};
   bool is_char_delimiter(char character);
 
  public:
   ConnectorParser(){};
-  ConnectorParser(std::vector<std::string> semiparsed_tokens)
-      : unparsed_tokens(semiparsed_tokens){};
+  ConnectorParser(std::vector<std::string> unparsed_tokens)
+      : Parser(unparsed_tokens){};
   ~ConnectorParser(){};
   std::vector<std::string> parse();
   void print_unparsed();
