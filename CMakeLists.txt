@@ -16,7 +16,6 @@ FetchContent_MakeAvailable(googletest)
 
 ADD_EXECUTABLE(Tests
     tests/parser_tests.cpp
-    src/parser/vector_parser.cpp
     src/parser/comment_parser.cpp 
     src/parser/group_parser.cpp
     src/parser/connector_parser.cpp
@@ -25,10 +24,11 @@ ADD_EXECUTABLE(Tests
 ADD_EXECUTABLE(MyShell
     src/main.cpp 
     src/shell/shell.cpp 
-    src/parser/vector_parser.cpp
+    src/parser/parser.cpp
     src/parser/comment_parser.cpp 
     src/parser/group_parser.cpp
     src/parser/connector_parser.cpp
+    src/parser/composite_parser.cpp
 )
 
 target_link_libraries(Tests gtest_main)
