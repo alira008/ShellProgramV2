@@ -4,19 +4,18 @@
 #include <string>
 #include <vector>
 
-#include "./vector_parser.hpp"
+#include "./parser.hpp"
 
-class GroupParser : private VectorParser {
+class GroupParser : public Parser {
  private:
-  std::string unparsed_line;
   std::vector<char> delimiters = {'[', ']', '(', ')'};
-  bool is_char_delim(const char character);
+  bool is_char_delimiter(const char character);
   void countDelims(char character, int (&paren_cnt)[2], int (&bracket_cnt)[2]);
 
  public:
   GroupParser(){};
-  GroupParser(std::string line_with_no_comments)
-      : VectorParser{}, unparsed_line(line_with_no_comments){};
+  GroupParser(std::vector<std::string> unparsed_tokens)
+      : Parser{unparsed_tokens} {};
   ~GroupParser(){};
   std::vector<std::string> parse();
   void print_unparsed();
