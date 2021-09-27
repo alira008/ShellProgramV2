@@ -1,11 +1,29 @@
-#include "./vector_parser.hpp"
+#include "./parser.hpp"
+
+#include <iostream>
+
+void Parser::set_unparsed_tokens(std::vector<std::string> unparsed_tokens) {
+  this->unparsed_tokens = unparsed_tokens;
+}
+
+void Parser::print_unparsed() {
+  for (auto token : this->unparsed_tokens) {
+    std::cout << "\t" << token << std::endl;
+  }
+}
+
+void Parser::print_parsed() {
+  for (auto token : this->parsed_tokens) {
+    std::cout << "\t" << token << std::endl;
+  }
+}
+
 // @param unparsed_str: The string we want to search for the string literal
 // @param i: The reference of the position we are searching in unparsed_str. At
 // the end of the function, we change this value to the position of the end
 // quote
 // @returns A string literal inside the given string from the position i
-std::string VectorParser::add_string_literal(const std::string unparsed_str,
-                                             int &i) {
+std::string Parser::add_string_literal(const std::string unparsed_str, int &i) {
   // Here we store the string literal we are returning
   std::string string_literal = "";
   //  Here we store the location of the closing quote \"
