@@ -34,5 +34,6 @@ std::vector<std::string> CompositeParser::parse() {
     parser->set_unparsed_tokens(result);
     result = parser->parse();
   }
+  this->parsed_tokens = result;
   return result;
 }

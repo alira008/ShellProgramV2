@@ -8,7 +8,7 @@
 
 class GroupParser : public Parser {
  private:
-  std::vector<char> delimiters = {'[', ']', '(', ')'};
+  std::vector<char> delimiters = {'(', ')'};
   bool is_char_delimiter(const char character);
   void countDelims(char character, int (&paren_cnt)[2], int (&bracket_cnt)[2]);
 
