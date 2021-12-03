@@ -29,6 +29,23 @@ ADD_EXECUTABLE(MyShell
     src/parser/group_parser.cpp
     src/parser/connector_parser.cpp
     src/parser/composite_parser.cpp
+
+    src/postfixer/postfixer.cpp
+
+    src/operators/operators.cpp
+
+    src/cmdline/cmdline.hpp
+    src/cmdline/connector.hpp
+    src/cmdline/command.cpp
+    src/cmdline/exit.cpp
+    src/cmdline/or_connector.cpp
+    src/cmdline/and_connector.cpp
+    src/cmdline/semicolon_connector.cpp
+    src/cmdline/pipe_connector.cpp
+    src/cmdline/single_output_redirection_connector.cpp
+    src/cmdline/double_output_redirection_connector.cpp
+    src/cmdline/input_redirection_connector.cpp
+    src/cmdline/cmdline_composite.cpp
 )
 
 target_link_libraries(Tests gtest_main)
